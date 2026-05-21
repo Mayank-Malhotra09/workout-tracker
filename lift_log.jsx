@@ -218,7 +218,33 @@ export default function WorkoutTracker() {
   const todayKey = toDateKey(new Date());
   const phase = getPhaseInfo();
   const week = getWeekNumber();
-  const isViewingToday = selectedDay === todayDay && isTrainingDay;
+
+  // Helper to map tab day to its date in the current week (resets on Monday)
+  const getLocalDateForDayName = (dayName) => {
+    const today = new Date();
+    const dayOfWeek = today.getDay(); // 0 = Sun, 1 = Mon, 2 = Tue, etc.
+    const distanceToMonday = dayOfWeek === 0 ? -6 : 1 - dayOfWeek;
+    const mondayOfThisWeek = new Date(today);
+    mondayOfThisWeek.setDate(today.getDate() + distanceToMonday);
+    
+    const dayOffsets = { Mon: 0, Tue: 1, Wed: 2, Thu: 3, Fri: 4 };
+    const offset = dayOffsets[dayName] || 0;
+    
+    const targetDate = new Date(mondayOfThisWeek);
+    targetDate.setDate(mondayOfThisWeek.getDate() + offset);
+    return targetDate;
+  };
+
+  const isPastOrToday = (dayName) => {
+    const targetDate = getLocalDateForDayName(dayName);
+    const today = new Date();
+    const targetMidnight = new Date(targetDate.getFullYear(), targetDate.getMonth(), targetDate.getDate());
+    const todayMidnight = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+    return targetMidnight <= todayMidnight;
+  };
+
+  const selectedDateKey = toDateKey(getLocalDateForDayName(selectedDay));
+  const isEditable = isPastOrToday(selectedDay);
 
   // Load fonts
   useEffect(() => {
@@ -312,7 +338,7 @@ export default function WorkoutTracker() {
   const getLastSession = (exerciseName) => {
     const dates = Object.keys(log).sort().reverse();
     for (const date of dates) {
-      if (date === todayKey) continue;
+      if (date === selectedDateKey) continue;
       const sets = log[date]?.exercises?.[exerciseName];
       if (sets && sets.length > 0 && sets.some(s => s.weight || s.reps)) {
         return { date, sets };
@@ -324,13 +350,13 @@ export default function WorkoutTracker() {
   const updateSet = (exerciseName, setIndex, field, value) => {
     setLog(prevLog => {
       const newLog = { ...prevLog };
-      if (!newLog[todayKey]) newLog[todayKey] = { day: todayDay, exercises: {} };
-      if (!newLog[todayKey].exercises[exerciseName]) {
+      if (!newLog[selectedDateKey]) newLog[selectedDateKey] = { day: selectedDay, exercises: {} };
+      if (!newLog[selectedDateKey].exercises[exerciseName]) {
         const setCount = WORKOUT_PLAN[selectedDay].exercises.find(e => e.name === exerciseName)?.sets || 3;
-        newLog[todayKey].exercises[exerciseName] = Array(setCount).fill(null).map(() => ({ weight: '', reps: '', done: false }));
+        newLog[selectedDateKey].exercises[exerciseName] = Array(setCount).fill(null).map(() => ({ weight: '', reps: '', done: false }));
       }
-      newLog[todayKey].exercises[exerciseName][setIndex] = {
-        ...newLog[todayKey].exercises[exerciseName][setIndex],
+      newLog[selectedDateKey].exercises[exerciseName][setIndex] = {
+        ...newLog[selectedDateKey].exercises[exerciseName][setIndex],
         [field]: value,
       };
       saveLog(newLog);
@@ -357,18 +383,17 @@ export default function WorkoutTracker() {
     }
   };
 
-  const getTodayProgress = () => {
-    if (!isViewingToday) return null;
-    const todayData = log[todayKey]?.exercises || {};
+  const getSelectedDayProgress = () => {
+    const dayData = log[selectedDateKey]?.exercises || {};
     const totalSets = WORKOUT_PLAN[selectedDay].exercises.reduce((sum, ex) => sum + ex.sets, 0);
     let doneSets = 0;
-    Object.values(todayData).forEach(sets => {
+    Object.values(dayData).forEach(sets => {
       sets.forEach(s => { if (s.done) doneSets++; });
     });
     return { done: doneSets, total: totalSets };
   };
 
-  const progress = getTodayProgress();
+  const progress = getSelectedDayProgress();
 
   // Weight & BMI triggers
   const handleLogWeight = async () => {
@@ -743,7 +768,7 @@ export default function WorkoutTracker() {
                 </div>
               )}
             </div>
-            {!isViewingToday && (
+            {!isEditable ? (
               <div style={{
                 marginTop: '12px',
                 padding: '8px 12px',
@@ -757,8 +782,26 @@ export default function WorkoutTracker() {
                 gap: '8px',
               }}>
                 <AlertCircle size={12} />
-                <span>VIEWING PLAN ONLY — log on today's day ({todayDay.toUpperCase()})</span>
+                <span>VIEWING PLAN ONLY — upcoming day ({selectedDay.toUpperCase()})</span>
               </div>
+            ) : (
+              selectedDay !== todayDay && (
+                <div style={{
+                  marginTop: '12px',
+                  padding: '8px 12px',
+                  background: '#0a1d37',
+                  border: '1px solid #0f4c81',
+                  fontSize: '11px',
+                  color: '#38bdf8',
+                  letterSpacing: '0.05em',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                }}>
+                  <AlertCircle size={12} color="#38bdf8" />
+                  <span>LOGGING PAST WORKOUT — Date: {getLocalDateForDayName(selectedDay).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}</span>
+                </div>
+              )
             )}
           </div>
 
@@ -796,10 +839,10 @@ export default function WorkoutTracker() {
                 key={ex.name}
                 exercise={ex}
                 number={idx + 1}
-                sets={getSetsForExercise(todayKey, ex.name)}
+                sets={getSetsForExercise(selectedDateKey, ex.name)}
                 lastSession={getLastSession(ex.name)}
-                onUpdate={isViewingToday ? (setIdx, field, val) => updateSet(ex.name, setIdx, field, val) : null}
-                readOnly={!isViewingToday}
+                onUpdate={isEditable ? (setIdx, field, val) => updateSet(ex.name, setIdx, field, val) : null}
+                readOnly={!isEditable}
               />
             ))}
           </div>

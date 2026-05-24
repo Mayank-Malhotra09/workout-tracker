@@ -4,7 +4,7 @@ import {
   Dumbbell, Scale, Brain, Upload, X, Download, Copy, RefreshCw 
 } from 'lucide-react';
 
-const PLAN_START = new Date('2026-05-13T00:00:00');
+const PLAN_START = new Date('2026-05-25T00:00:00');
 const MAX_BMI_IMAGES = 15;
 
 const WORKOUT_PLAN = {

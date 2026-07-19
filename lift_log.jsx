@@ -56,81 +56,56 @@ const WORKOUT_PLAN = {
 const DAYS_ORDER = ['Mon', 'Wed', 'Fri'];
 const DAY_NAMES = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
+const SNACK_MENU = [
+  { id: 'shake_banana',    name: 'Protein shake + banana',   qty: '1 scoop whey + 1 banana',                  kcal: 220, p: 27, c: 28, f: 1,  fiber: 3 },
+  { id: 'cottage_bowl',    name: 'Cottage cheese bowl',       qty: '100g low-fat cottage cheese + herbs',      kcal: 150, p: 20, c: 6,  f: 5,  fiber: 1 },
+  { id: 'skyr_fruit',      name: 'Skyr + fruit',              qty: '150g skyr + apple or berries',             kcal: 150, p: 18, c: 18, f: 1,  fiber: 3 },
+  { id: 'greek_almonds',   name: 'Greek yogurt + almonds',    qty: '150g greek yogurt + 15g almonds',          kcal: 230, p: 17, c: 12, f: 13, fiber: 2 },
+  { id: 'paneer_cucumber', name: 'Paneer cubes + cucumber',   qty: '80g low-fat paneer + cucumber',            kcal: 180, p: 16, c: 6,  f: 11, fiber: 1 },
+  { id: 'chana_curd',      name: 'Roasted chana + curd',      qty: '40g roasted chana + 100g curd',            kcal: 230, p: 15, c: 30, f: 5,  fiber: 6 },
+  { id: 'eggs_fruit',      name: 'Boiled eggs + fruit',       qty: '2 boiled eggs + 1 fruit',                  kcal: 190, p: 14, c: 15, f: 9,  fiber: 2 },
+  { id: 'sprouts_chaat',   name: 'Sprouts chaat',             qty: '1 bowl moong sprouts + onion/tomato/lemon',kcal: 160, p: 12, c: 24, f: 2,  fiber: 7 },
+];
+
 const DIET_PLAN = {
-  Mon: {
-    type: 'Push Day · Non-Veg',
-    meals: [
-      { time: '7:30 AM', type: 'PRE-BREAKFAST', item: '2 boiled eggs + black coffee (no sugar)', qty: '2 eggs', kcal: 140, p: 12, c: 0, f: 10, direction: 'Boil eggs in bubbling water for 7-8 minutes (medium) or 10 minutes (hard). Brew black coffee without sugar.' },
-      { time: '9:00 AM', type: 'BREAKFAST', item: 'Overnight oats with skyr, milk, whey protein', qty: '40g oats · 150g skyr · 150ml milk · 1 scoop whey', kcal: 415, p: 49, c: 42, f: 9, direction: 'Mix oats, skyr, milk, and whey in a jar or bowl. Stir thoroughly, cover, and refrigerate overnight.' },
-      { time: '1:30 PM', type: 'LUNCH', item: 'Chapati + Dal + Chicken curry + Sabzi', qty: '2 small chapati · 1 katori dal · 100-120g chicken · 1 katori sabzi · 1 tsp ghee max', kcal: 600, p: 45, c: 60, f: 18, direction: 'Reheat dal, sabzi, and chicken curry. Serve warm with 2 small chapatis. Keep ghee addition strictly below 1 tsp.' },
-      { time: '7:00 PM', type: 'PRE-WORKOUT', item: 'Roasted chana + small banana', qty: '40g chana · 1 banana', kcal: 235, p: 10, c: 45, f: 4, direction: 'Portion 40g roasted chana and peel banana. Eat 45-60 mins before working out for optimal energy.' },
-      { time: '9:15 PM', type: 'POST-WORKOUT', item: 'Whey protein + banana in water', qty: '1 scoop whey · 1 banana', kcal: 250, p: 30, c: 30, f: 1, direction: 'Mix 1 scoop whey protein in 250ml cold water. Drink immediately post-workout and eat banana.' },
-      { time: '9:30 PM', type: 'DINNER', item: 'Mexican Corn Chicken Bowl', qty: '150g chicken cooked · ½ cup corn · cucumber/onion · 2 tbsp yogurt · Tajin', kcal: 360, p: 52, c: 20, f: 6, direction: 'Pan-sear chicken breasts. Dice chicken, mix with sweet corn, cucumber, red onion, hung curd, and a squeeze of lemon and Tajin.' },
-    ],
-  },
-  Tue: {
-    type: 'Rest Day · Strict Veg (no eggs)',
-    meals: [
-      { time: '7:30 AM', type: 'PRE-BREAKFAST', item: 'Almonds + black coffee', qty: '25g almonds (~20 pieces)', kcal: 145, p: 5, c: 5, f: 13, direction: 'Count 20 raw almonds. Serve with freshly brewed sugar-free black coffee.' },
-      { time: '9:00 AM', type: 'BREAKFAST', item: 'Overnight oats with skyr, milk, whey protein', qty: '40g oats · 150g skyr · 150ml milk · 1 scoop whey', kcal: 415, p: 49, c: 42, f: 9, direction: 'Mix oats, skyr, milk, and whey in a jar or bowl. Stir thoroughly, cover, and refrigerate overnight.' },
-      { time: '1:30 PM', type: 'LUNCH', item: 'Chapati + Heavy dal + Soya chunks sabzi + Salad', qty: '2 small chapati · 1.5 katori dal · 50g dry soya chunks (cooked as sabzi) · salad', kcal: 600, p: 40, c: 70, f: 12, direction: 'Soak soya chunks in warm water, squeeze water out, then cook with onion, tomatoes, and spices as sabzi. Serve with dal and chapati.' },
-      { time: '5:00 PM', type: 'AFTERNOON', item: 'Whey protein + small banana', qty: '1 scoop whey · 1 small banana', kcal: 215, p: 25, c: 28, f: 1, direction: 'Shake 1 scoop whey protein in cold water and eat banana as an afternoon snack.' },
-      { time: '9:30 PM', type: 'DINNER', item: 'Loaded Sweet Potato Bowl with paneer + hung curd', qty: '1 large sweet potato · 150g low-fat paneer · 2 tbsp hung curd · coriander', kcal: 490, p: 37, c: 61, f: 10, direction: 'Bake or microwave sweet potato until soft. Slice open, load with crumbled/cubed low-fat paneer, hung curd, and garnish with coriander.' },
-    ],
-  },
-  Wed: {
-    type: 'Pull Day · Non-Veg',
-    meals: [
-      { time: '7:30 AM', type: 'PRE-BREAKFAST', item: '2 boiled eggs + black coffee', qty: '2 eggs', kcal: 140, p: 12, c: 0, f: 10, direction: 'Boil eggs in bubbling water for 7-10 minutes. Serve with black coffee.' },
-      { time: '9:00 AM', type: 'BREAKFAST', item: 'Besan cheela + boiled egg + milk', qty: '2 cheelas (30g besan each) · 1 egg · 200ml milk', kcal: 410, p: 36, c: 46, f: 15, direction: 'Mix besan (chickpea flour) with water, salt, chilies, and coriander into a smooth batter. Pour on hot pan to cook 2 thin crepes. Serve with a boiled egg and milk.' },
-      { time: '1:30 PM', type: 'LUNCH', item: 'Chapati + Dal + Chicken curry + Sabzi', qty: '2 small chapati · 1 katori dal · 100-120g chicken · 1 katori sabzi', kcal: 600, p: 45, c: 60, f: 18, direction: 'Reheat chicken curry, dal, and sabzi. Serve hot with 2 fresh chapatis.' },
-      { time: '7:00 PM', type: 'PRE-WORKOUT', item: 'Greek yogurt + small banana', qty: '150g Greek yogurt · 1 small banana', kcal: 200, p: 16, c: 28, f: 4, direction: 'Scoop Greek yogurt into a bowl, slice banana on top, and mix. Eat 45 mins before training.' },
-      { time: '9:15 PM', type: 'POST-WORKOUT', item: 'Whey protein + banana', qty: '1 scoop whey · 1 banana', kcal: 250, p: 30, c: 30, f: 1, direction: 'Drink whey protein shaken in water and eat banana immediately post-session.' },
-      { time: '9:30 PM', type: 'DINNER', item: 'Chicken Rice Tzatziki Jar', qty: '150g chicken cooked · ½ cup cooked rice · cucumber/onion · 3 tbsp tzatziki', kcal: 415, p: 53, c: 28, f: 6, direction: 'Cook chicken cubes. Layer cooked rice, diced chicken, chopped cucumber/onion, and tzatziki sauce in a jar or bowl.' },
-    ],
-  },
-  Thu: {
-    type: 'Rest Day · Veg',
-    meals: [
-      { time: '7:30 AM', type: 'PRE-BREAKFAST', item: 'Almonds + black coffee', qty: '25g almonds', kcal: 145, p: 5, c: 5, f: 13, direction: 'Portion almonds and serve with hot black coffee.' },
-      { time: '9:00 AM', type: 'BREAKFAST', item: 'Overnight oats with skyr, milk, whey protein', qty: '40g oats · 150g skyr · 150ml milk · 1 scoop whey', kcal: 415, p: 49, c: 42, f: 9, direction: 'Mix oats, skyr, milk, and whey in a jar or bowl. Stir thoroughly, cover, and refrigerate overnight.' },
-      { time: '1:30 PM', type: 'LUNCH', item: 'Chapati + Dal + Paneer sabzi + Salad', qty: '2 small chapati · 1 katori dal · 125g low-fat paneer sabzi · salad', kcal: 615, p: 37, c: 60, f: 25, direction: 'Reheat paneer sabzi and dal. Serve with 2 small chapatis and fresh cucumber/tomato salad.' },
-      { time: '5:00 PM', type: 'AFTERNOON', item: 'Whey protein + banana', qty: '1 scoop whey · 1 banana', kcal: 250, p: 30, c: 30, f: 1, direction: 'Mix whey protein scoop with water. Eat banana on the side.' },
-      { time: '9:30 PM', type: 'DINNER', item: 'Paneer Pasta Salad Jar', qty: '100g low-fat paneer · 50g dry pasta cooked · veggies · 100g skyr · 1 tbsp red pesto', kcal: 495, p: 40, c: 57, f: 13, direction: 'Boil pasta and drain. Toss with low-fat paneer cubes, chopped mixed veggies, skyr, and red pesto. Serve cold.' },
-    ],
-  },
-  Fri: {
-    type: 'Legs Day · Non-Veg (chicken or fish)',
-    meals: [
-      { time: '7:30 AM', type: 'PRE-BREAKFAST', item: '2 boiled eggs + black coffee', qty: '2 eggs', kcal: 140, p: 12, c: 0, f: 10, direction: 'Hard-boil 2 eggs. Serve with black coffee.' },
-      { time: '9:00 AM', type: 'BREAKFAST', item: 'Omelette + toast + skyr', qty: '1 whole + 2 whites omelette · 1 slice toast · 150g skyr', kcal: 370, p: 48, c: 21, f: 13, direction: 'Whisk 1 whole egg + 2 whites. Pour into non-stick pan to make omelette. Serve with toast and cup of skyr.' },
-      { time: '1:30 PM', type: 'LUNCH', item: 'Chapati + Dal + Chicken/Fish + Sabzi', qty: '2 small chapati · 1 katori dal · 120g chicken or fish · 1 katori sabzi', kcal: 600, p: 45, c: 60, f: 18, direction: 'Reheat chicken or fish along with dal and sabzi. Serve warm with chapatis.' },
-      { time: '3:30 PM', type: 'SNACK', item: '1 apple (carb fuel for leg day)', qty: '1 medium apple', kcal: 95, p: 0, c: 25, f: 0, direction: 'Wash and slice 1 fresh apple. Eat 1-2 hours before pre-workout meal to preload carbs.' },
-      { time: '7:00 PM', type: 'PRE-WORKOUT', item: 'Roasted chana + small banana', qty: '40g chana · 1 small banana', kcal: 235, p: 10, c: 45, f: 4, direction: 'Portion 40g roasted chana and banana. Eat 45 mins before heavy leg session.' },
-      { time: '9:15 PM', type: 'POST-WORKOUT', item: 'Whey protein + banana', qty: '1 scoop whey · 1 banana', kcal: 250, p: 30, c: 30, f: 1, direction: 'Consume whey protein shake and banana post-workout.' },
-      { time: '9:30 PM', type: 'DINNER', item: 'Chicken Pesto Pasta Jar', qty: '150g chicken · 50g dry pasta cooked · veggies · 2 tbsp yogurt · 1 tbsp red pesto', kcal: 555, p: 58, c: 50, f: 11, direction: 'Toss cooked pasta, chicken breast cubes, yogurt, and red pesto. Layer in a jar with fresh spinach or salad veggies.' },
-    ],
-  },
-  Sat: {
-    type: 'Rest Day · Veg',
-    meals: [
-      { time: '7:30 AM', type: 'PRE-BREAKFAST', item: 'Almonds + black coffee', qty: '25g almonds', kcal: 145, p: 5, c: 5, f: 13, direction: 'Serve 25g almonds with sugar-free black coffee.' },
-      { time: '9:00 AM', type: 'BREAKFAST', item: 'Overnight oats with skyr, milk, whey protein', qty: '40g oats · 150g skyr · 150ml milk · 1 scoop whey', kcal: 415, p: 49, c: 42, f: 9, direction: 'Mix oats, skyr, milk, and whey in a jar or bowl. Stir thoroughly, cover, and refrigerate overnight.' },
-      { time: '1:30 PM', type: 'LUNCH', item: 'High-protein veg combo (paneer + soya + curd)', qty: '2 chapati · 1 katori dal · 100g paneer sabzi · 50g dry soya cooked · 100g curd', kcal: 800, p: 57, c: 72, f: 25, direction: 'Cook soya chunks. Serve paneer sabzi, soya chunks, dal, and curd with 2 fresh warm chapatis.' },
-      { time: '5:00 PM', type: 'AFTERNOON', item: 'Whey protein + banana', qty: '1 scoop whey · 1 banana', kcal: 250, p: 30, c: 30, f: 1, direction: 'Drink whey protein shaken in water and eat a banana.' },
-      { time: '9:30 PM', type: 'DINNER', item: 'Rice salad with paneer', qty: '100g cooked rice · 150g low-fat paneer · 200g mixed veggies', kcal: 455, p: 37, c: 47, f: 15, direction: 'Toss cooked rice with paneer cubes, chopped cucumber, tomatoes, bell peppers, lemon juice, salt, and pepper.' },
-    ],
-  },
-  Sun: {
-    type: 'Flex Day · Rest',
-    meals: [
-      { time: '8:00 AM', type: 'PRE-BREAKFAST', item: '2 eggs OR 25g almonds + black coffee', qty: '2 eggs OR 25g almonds', kcal: 145, p: 9, c: 3, f: 12, direction: 'Boil eggs or portion almonds. Drink with a cup of hot black coffee.' },
-      { time: '9:30 AM', type: 'BREAKFAST', item: 'Overnight oats OR cheela combo', qty: '1 portion', kcal: 415, p: 49, c: 42, f: 9, direction: 'Prepare overnight oats in advance, or cook besan cheelas on a hot pan.' },
-      { time: '1:30 PM', type: 'LUNCH', item: 'Normal home lunch (veg or non-veg)', qty: '2 chapati · dal · protein source · sabzi', kcal: 600, p: 40, c: 60, f: 18, direction: 'Enjoy a standard home-cooked lunch prioritizing a solid portion of lean protein (chicken, paneer, or double dal).' },
-      { time: '5:00 PM', type: 'AFTERNOON', item: 'Skyr + banana', qty: '200g skyr · 1 banana', kcal: 220, p: 35, c: 35, f: 0, direction: 'Enjoy a fresh tub of skyr with a banana.' },
-      { time: '9:00 PM', type: 'DINNER (OFF-PLAN)', item: 'ONE off-plan meal allowed — tikka, kathi roll, paneer dish, restaurant meal', qty: 'Target 500-600 kcal · don\'t go overboard · log everything', kcal: 575, p: 25, c: 50, f: 25, direction: 'Enjoy your weekly off-plan dinner! Aim for high-protein options like chicken tikka, paneer tikka, or a kathi roll. Avoid deep-fried items and sugary desserts.' },
-    ],
-  },
+  Mon: { tag: 'Gym · Push Day',
+    breakfast: { time: '9:00 AM',  item: '2 whole eggs + skyr + protein shake', qty: '2 eggs · 100g skyr · 1 scoop whey', kcal: 350, p: 42, c: 10, f: 12, fiber: 1 },
+    lunch:     { time: '1:30 PM',  item: 'Subscription portioned meal',          qty: 'As delivered — balanced portion',   kcal: 550, p: 35, c: 55, f: 18, fiber: 8 },
+    dinner:    { time: '9:00 PM',  item: 'Chicken breast salad + small carb',    qty: '120g chicken · veggies · 100g rice or 1 chapati', kcal: 400, p: 42, c: 25, f: 12, fiber: 5 } },
+  Tue: { tag: 'Rest · Skipping',
+    breakfast: { time: '9:00 AM',  item: 'Overnight high-protein oats',          qty: '40g oats · 150g skyr · milk · 1 scoop whey', kcal: 415, p: 47, c: 41, f: 8, fiber: 6 },
+    lunch:     { time: '1:30 PM',  item: 'Subscription portioned meal',          qty: 'As delivered',                       kcal: 550, p: 35, c: 55, f: 18, fiber: 8 },
+    dinner:    { time: '9:00 PM',  item: 'Paneer salad',                         qty: '100g low-fat paneer · veggies · lemon dressing', kcal: 380, p: 25, c: 15, f: 22, fiber: 4 } },
+  Wed: { tag: 'Gym · Pull Day',
+    breakfast: { time: '9:00 AM',  item: '2 whole eggs + skyr + protein shake', qty: '2 eggs · 100g skyr · 1 scoop whey',  kcal: 350, p: 42, c: 10, f: 12, fiber: 1 },
+    lunch:     { time: '1:30 PM',  item: 'Subscription portioned meal',          qty: 'As delivered',                       kcal: 550, p: 35, c: 55, f: 18, fiber: 8 },
+    dinner:    { time: '9:00 PM',  item: 'Chicken breast salad + small carb',    qty: '120g chicken · veggies · 100g rice or 1 chapati', kcal: 400, p: 42, c: 25, f: 12, fiber: 5 } },
+  Thu: { tag: 'Rest · Skipping',
+    breakfast: { time: '9:00 AM',  item: 'Overnight high-protein oats',          qty: '40g oats · 150g skyr · milk · 1 scoop whey', kcal: 415, p: 47, c: 41, f: 8, fiber: 6 },
+    lunch:     { time: '1:30 PM',  item: 'Subscription portioned meal',          qty: 'As delivered',                       kcal: 550, p: 35, c: 55, f: 18, fiber: 8 },
+    dinner:    { time: '9:00 PM',  item: 'Chickpea salad + protein topping',     qty: 'Chickpea salad · 100g paneer or chicken on top', kcal: 420, p: 32, c: 40, f: 13, fiber: 9 } },
+  Fri: { tag: 'Gym · Legs Day',
+    breakfast: { time: '9:00 AM',  item: '2 whole eggs + skyr + protein shake', qty: '2 eggs · 100g skyr · 1 scoop whey',  kcal: 350, p: 42, c: 10, f: 12, fiber: 1 },
+    lunch:     { time: '1:30 PM',  item: 'Subscription portioned meal',          qty: 'As delivered',                       kcal: 550, p: 35, c: 55, f: 18, fiber: 8 },
+    dinner:    { time: '9:00 PM',  item: 'Chicken breast salad + pasta',         qty: '120g chicken · veggies · 50g pasta (cooked)', kcal: 480, p: 44, c: 55, f: 10, fiber: 5 } },
+  Sat: { tag: 'Rest · Skipping',
+    breakfast: { time: '9:00 AM',  item: 'Overnight high-protein oats',          qty: '40g oats · 150g skyr · milk · 1 scoop whey', kcal: 415, p: 47, c: 41, f: 8, fiber: 6 },
+    lunch:     { time: '1:30 PM',  item: 'Subscription portioned meal',          qty: 'As delivered',                       kcal: 550, p: 35, c: 55, f: 18, fiber: 8 },
+    dinner:    { time: '9:00 PM',  item: 'Paneer or chickpea salad',             qty: '100g paneer or chickpea · veggies',  kcal: 400, p: 28, c: 30, f: 16, fiber: 6 } },
+  Sun: { tag: 'Flex · Rest Day',
+    breakfast: { time: '9:30 AM',  item: 'Oats OR eggs combo (your choice)',     qty: '1 portion',                          kcal: 400, p: 45, c: 30, f: 10, fiber: 4 },
+    lunch:     { time: '1:30 PM',  item: 'Subscription portioned meal',          qty: 'As delivered',                       kcal: 550, p: 35, c: 55, f: 18, fiber: 8 },
+    dinner:    { time: '9:00 PM',  item: 'ONE off-plan meal', offPlan: true,     qty: 'Target 500-600 kcal · log it · don\'t go overboard', kcal: 600, p: 30, c: 50, f: 28, fiber: 4 } },
+};
+
+const DEFAULT_SNACKS = {
+  Mon: { snack1: 'skyr_fruit', snack2: 'shake_banana' },
+  Tue: { snack1: 'skyr_fruit', snack2: 'shake_banana' },
+  Wed: { snack1: 'skyr_fruit', snack2: 'shake_banana' },
+  Thu: { snack1: 'skyr_fruit', snack2: 'shake_banana' },
+  Fri: { snack1: 'skyr_fruit', snack2: 'shake_banana' },
+  Sat: { snack1: 'skyr_fruit', snack2: 'shake_banana' },
+  Sun: { snack1: 'skyr_fruit', snack2: 'shake_banana' },
 };
 
 const toDateKey = (date) => {
@@ -243,6 +218,8 @@ export default function WorkoutTracker() {
   const [activeTab, setActiveTab] = useState('workout'); // 'workout' | 'body' | 'sync'
   const [activeSection, setActiveSection] = useState('workout'); // 'workout' | 'diet'
   const [selectedDietDay, setSelectedDietDay] = useState(() => getTodayDayName());
+  const [snackChoices, setSnackChoices] = useState(DEFAULT_SNACKS);
+  const [activePickerSlot, setActivePickerSlot] = useState(null); // 'snack1' | 'snack2' | null
 
   // Edit Date & derived properties
   const [editDate, setEditDate] = useState(new Date());
@@ -386,6 +363,13 @@ export default function WorkoutTracker() {
         }
       } catch (e) {}
 
+      try {
+        const dietResult = await storage.get('diet_snack_choices');
+        if (dietResult?.value) {
+          setSnackChoices(JSON.parse(dietResult.value));
+        }
+      } catch (e) {}
+
       setLoading(false);
     })();
   }, []);
@@ -424,6 +408,23 @@ export default function WorkoutTracker() {
       await storage.set('bmi_images', JSON.stringify(newImages));
     } catch (e) {
       console.error('Failed to save BMI images', e);
+    }
+  };
+
+  const handleSwapSnack = async (day, slot, snackId) => {
+    const updated = {
+      ...snackChoices,
+      [day]: {
+        ...snackChoices[day],
+        [slot]: snackId
+      }
+    };
+    setSnackChoices(updated);
+    setActivePickerSlot(null);
+    try {
+      await storage.set('diet_snack_choices', JSON.stringify(updated));
+    } catch (e) {
+      console.error("Failed to save diet snack choices", e);
     }
   };
 
@@ -1180,7 +1181,7 @@ export default function WorkoutTracker() {
                    selectedDietDay === 'Sat' ? 'SATURDAY' : 'SUNDAY'}
                 </div>
                 <div style={{ fontSize: '13px', color: '#888', marginTop: '6px' }}>
-                  {DIET_PLAN[selectedDietDay]?.type}
+                  {DIET_PLAN[selectedDietDay]?.tag}
                 </div>
               </div>
 
@@ -1211,72 +1212,181 @@ export default function WorkoutTracker() {
                   color: '#aaa',
                   lineHeight: '1.6',
                 }}>
+                  <li>5 meals: 3 main + 2 snacks — snacks are NOT optional</li>
+                  <li>Snack 2 (5 PM) is the key one — prevents evening overeating</li>
+                  <li>Every snack = protein + fiber, never naked carbs</li>
+                  <li>Rest days (Tue/Thu/Sat): pick higher-protein snacks (shake, cottage cheese, skyr)</li>
                   <li>1 off-plan meal/week · Sunday dinner only</li>
-                  <li>Every meal needs a protein anchor</li>
-                  <li>Weigh portions for 2 weeks, then eyeball</li>
-                  <li>Kitchen closes after dinner</li>
                 </ul>
               </div>
 
               {/* Meal Cards */}
-              <div style={{ padding: '0 16px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                {DIET_PLAN[selectedDietDay]?.meals.map((meal, idx) => (
-                  <MealCard key={idx} meal={meal} />
-                ))}
-              </div>
+              {(() => {
+                const dayPlan = DIET_PLAN[selectedDietDay];
+                if (!dayPlan) return null;
+
+                const snack1Id = snackChoices[selectedDietDay]?.snack1 || 'skyr_fruit';
+                const snack1Data = SNACK_MENU.find(s => s.id === snack1Id) || SNACK_MENU[2];
+                const snack1Meal = {
+                  ...snack1Data,
+                  time: '~11:30 AM',
+                  type: 'SNACK 1 · ~11:30 AM'
+                };
+
+                const snack2Id = snackChoices[selectedDietDay]?.snack2 || 'shake_banana';
+                const snack2Data = SNACK_MENU.find(s => s.id === snack2Id) || SNACK_MENU[0];
+                const snack2Meal = {
+                  ...snack2Data,
+                  time: '~5:00 PM',
+                  type: 'SNACK 2 · ~5:00 PM',
+                  subtext: 'Most important — kills evening hunger'
+                };
+
+                const breakfastMeal = {
+                  ...dayPlan.breakfast,
+                  type: 'BREAKFAST'
+                };
+                
+                const lunchMeal = {
+                  ...dayPlan.lunch,
+                  type: 'LUNCH',
+                  isLunch: true
+                };
+
+                const dinnerMeal = {
+                  ...dayPlan.dinner,
+                  type: dayPlan.dinner.offPlan ? 'DINNER · OFF-PLAN' : 'DINNER'
+                };
+
+                return (
+                  <div style={{ padding: '0 16px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                    <MealCard meal={breakfastMeal} />
+
+                    <MealCard 
+                      meal={snack1Meal} 
+                      isSnack={true}
+                      currentSnackId={snack1Id}
+                      isSwapOpen={activePickerSlot === 'snack1'}
+                      toggleSwap={() => setActivePickerSlot(curr => curr === 'snack1' ? null : 'snack1')}
+                      onSwap={(newId) => handleSwapSnack(selectedDietDay, 'snack1', newId)}
+                    />
+
+                    <MealCard meal={lunchMeal} />
+
+                    <MealCard 
+                      meal={snack2Meal} 
+                      isSnack={true}
+                      currentSnackId={snack2Id}
+                      isSwapOpen={activePickerSlot === 'snack2'}
+                      toggleSwap={() => setActivePickerSlot(curr => curr === 'snack2' ? null : 'snack2')}
+                      onSwap={(newId) => handleSwapSnack(selectedDietDay, 'snack2', newId)}
+                    />
+
+                    <MealCard meal={dinnerMeal} />
+                  </div>
+                );
+              })()}
 
               {/* Daily Macro Footer */}
-              <div style={{
-                margin: '20px 16px 24px',
-                padding: '16px 20px',
-                border: '1px solid #262626',
-                background: '#0f0f0f',
-              }}>
-                <div style={{
-                  fontSize: '11px',
-                  color: '#888',
-                  letterSpacing: '0.12em',
-                  textTransform: 'uppercase',
-                  marginBottom: '12px',
-                  fontWeight: 'bold',
-                }}>
-                  DAILY TOTAL
-                </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <div>
-                    <div style={{ fontFamily: 'Anton, sans-serif', fontSize: '32px', color: '#fbbf24', lineHeight: 1 }}>
-                      {DIET_PLAN[selectedDietDay]?.meals.reduce((sum, m) => sum + m.kcal, 0)}
+              {(() => {
+                const dayPlan = DIET_PLAN[selectedDietDay];
+                if (!dayPlan) return null;
+
+                const snack1Id = snackChoices[selectedDietDay]?.snack1 || 'skyr_fruit';
+                const snack1 = SNACK_MENU.find(s => s.id === snack1Id) || SNACK_MENU[2];
+
+                const snack2Id = snackChoices[selectedDietDay]?.snack2 || 'shake_banana';
+                const snack2 = SNACK_MENU.find(s => s.id === snack2Id) || SNACK_MENU[0];
+
+                const mealsToSum = [
+                  dayPlan.breakfast,
+                  snack1,
+                  dayPlan.lunch,
+                  snack2,
+                  dayPlan.dinner
+                ];
+
+                const totalKcal = mealsToSum.reduce((sum, m) => sum + (m?.kcal || 0), 0);
+                const totalP = mealsToSum.reduce((sum, m) => sum + (m?.p || 0), 0);
+                const totalC = mealsToSum.reduce((sum, m) => sum + (m?.c || 0), 0);
+                const totalF = mealsToSum.reduce((sum, m) => sum + (m?.f || 0), 0);
+                const totalFiber = mealsToSum.reduce((sum, m) => sum + (m?.fiber || 0), 0);
+
+                const isProteinGood = totalP >= 150;
+                const proteinColor = isProteinGood ? '#fbbf24' : '#f87171'; // chalk-yellow success vs warning soft red/orange
+
+                return (
+                  <div style={{
+                    margin: '20px 16px 24px',
+                    padding: '16px 20px',
+                    border: '1px solid #262626',
+                    background: '#0f0f0f',
+                  }}>
+                    <div style={{
+                      fontSize: '11px',
+                      color: '#888',
+                      letterSpacing: '0.12em',
+                      textTransform: 'uppercase',
+                      marginBottom: '12px',
+                      fontWeight: 'bold',
+                    }}>
+                      DAILY TOTAL
                     </div>
-                    <div style={{ fontSize: '10px', color: '#666', letterSpacing: '0.05em', marginTop: '4px' }}>
-                      KCAL
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
+                      <div>
+                        <div style={{ fontFamily: 'Anton, sans-serif', fontSize: '32px', color: '#fbbf24', lineHeight: 1 }}>
+                          {totalKcal}
+                        </div>
+                        <div style={{ fontSize: '10px', color: '#666', letterSpacing: '0.05em', marginTop: '4px' }}>
+                          KCAL
+                        </div>
+                      </div>
+                      <div>
+                        <div style={{ fontFamily: 'Anton, sans-serif', fontSize: '32px', color: proteinColor, lineHeight: 1 }}>
+                          {totalP}g
+                        </div>
+                        <div style={{ fontSize: '10px', color: '#666', letterSpacing: '0.05em', marginTop: '4px' }}>
+                          PROTEIN
+                        </div>
+                      </div>
+                      <div>
+                        <div style={{ fontFamily: 'Anton, sans-serif', fontSize: '32px', color: '#fafafa', lineHeight: 1 }}>
+                          {totalC}g
+                        </div>
+                        <div style={{ fontSize: '10px', color: '#666', letterSpacing: '0.05em', marginTop: '4px' }}>
+                          CARBS
+                        </div>
+                      </div>
+                      <div>
+                        <div style={{ fontFamily: 'Anton, sans-serif', fontSize: '32px', color: '#fafafa', lineHeight: 1 }}>
+                          {totalF}g
+                        </div>
+                        <div style={{ fontSize: '10px', color: '#666', letterSpacing: '0.05em', marginTop: '4px' }}>
+                          FAT
+                        </div>
+                      </div>
+                      <div>
+                        <div style={{ fontFamily: 'Anton, sans-serif', fontSize: '32px', color: '#fafafa', lineHeight: 1 }}>
+                          {totalFiber}g
+                        </div>
+                        <div style={{ fontSize: '10px', color: '#666', letterSpacing: '0.05em', marginTop: '4px' }}>
+                          FIBER
+                        </div>
+                      </div>
+                    </div>
+
+                    <div style={{
+                      borderTop: '1px solid #1f1f1f',
+                      paddingTop: '10px',
+                      fontSize: '11px',
+                      color: '#888',
+                      lineHeight: '1.4',
+                    }}>
+                      Target: ~1800 kcal · <span style={{ color: proteinColor, fontWeight: 'bold' }}>150g+ protein</span> · 30g fiber
                     </div>
                   </div>
-                  <div>
-                    <div style={{ fontFamily: 'Anton, sans-serif', fontSize: '32px', color: '#fafafa', lineHeight: 1 }}>
-                      {DIET_PLAN[selectedDietDay]?.meals.reduce((sum, m) => sum + m.p, 0)}g
-                    </div>
-                    <div style={{ fontSize: '10px', color: '#666', letterSpacing: '0.05em', marginTop: '4px' }}>
-                      PROTEIN
-                    </div>
-                  </div>
-                  <div>
-                    <div style={{ fontFamily: 'Anton, sans-serif', fontSize: '32px', color: '#fafafa', lineHeight: 1 }}>
-                      {DIET_PLAN[selectedDietDay]?.meals.reduce((sum, m) => sum + m.c, 0)}g
-                    </div>
-                    <div style={{ fontSize: '10px', color: '#666', letterSpacing: '0.05em', marginTop: '4px' }}>
-                      CARBS
-                    </div>
-                  </div>
-                  <div>
-                    <div style={{ fontFamily: 'Anton, sans-serif', fontSize: '32px', color: '#fafafa', lineHeight: 1 }}>
-                      {DIET_PLAN[selectedDietDay]?.meals.reduce((sum, m) => sum + m.f, 0)}g
-                    </div>
-                    <div style={{ fontSize: '10px', color: '#666', letterSpacing: '0.05em', marginTop: '4px' }}>
-                      FAT
-                    </div>
-                  </div>
-                </div>
-              </div>
+                );
+              })()}
             </>
           )}
         </>
@@ -2135,51 +2245,86 @@ function InputBox({ value, onChange, placeholder, readOnly, inputMode, done }) {
   );
 }
 
-function MealCard({ meal }) {
+function MealCard({ meal, isSnack, onSwap, isSwapOpen, toggleSwap, currentSnackId }) {
   const [showDirections, setShowDirections] = useState(false);
-  const isOffPlan = meal.type === 'DINNER (OFF-PLAN)';
+  const isOffPlan = meal.offPlan === true;
 
   return (
     <div style={{
       border: '1px solid #262626',
       background: '#0f0f0f',
       padding: '12px 14px',
+      borderLeft: isSnack ? '3px solid #fbbf24' : '1px solid #262626',
+      position: 'relative',
     }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '11px', letterSpacing: '0.05em' }}>
           <span style={{ color: '#666', fontWeight: 600 }}>{meal.time}</span>
           <span style={{ color: '#444' }}>·</span>
           <span style={{ 
-            color: isOffPlan ? '#fbbf24' : '#888',
+            color: isOffPlan ? '#fbbf24' : '#fbbf24',
             fontWeight: 700,
           }}>
-            {meal.type}
+            {isOffPlan ? 'DINNER · OFF-PLAN' : meal.type}
           </span>
         </div>
-        {meal.direction && (
+        {isSnack ? (
           <button
-            onClick={() => setShowDirections(s => !s)}
+            onClick={toggleSwap}
             style={{
               background: 'transparent',
               border: 'none',
               color: '#fbbf24',
               fontSize: '11px',
+              fontWeight: 'bold',
               cursor: 'pointer',
               padding: '2px 4px',
-              textDecoration: 'underline',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '4px',
             }}
           >
-            {showDirections ? 'Hide Recipe' : 'Recipe'}
+            <span>SWAP</span>
+            <RefreshCw size={10} />
           </button>
+        ) : (
+          meal.direction && (
+            <button
+              onClick={() => setShowDirections(s => !s)}
+              style={{
+                background: 'transparent',
+                border: 'none',
+                color: '#fbbf24',
+                fontSize: '11px',
+                cursor: 'pointer',
+                padding: '2px 4px',
+                textDecoration: 'underline',
+              }}
+            >
+              {showDirections ? 'Hide Recipe' : 'Recipe'}
+            </button>
+          )
         )}
       </div>
       <div style={{ fontSize: '15px', fontWeight: 600, color: '#fafafa', lineHeight: 1.3, marginBottom: '6px' }}>
-        {meal.item}
+        {meal.item || meal.name}
       </div>
-      <div style={{ fontSize: '12px', color: '#888', marginBottom: '10px', lineHeight: 1.4 }}>
+      <div style={{ fontSize: '12px', color: '#888', marginBottom: (meal.subtext || meal.isLunch) ? '6px' : '10px', lineHeight: 1.4 }}>
         {meal.qty}
       </div>
       
+      {meal.subtext && (
+        <div style={{ fontSize: '11px', color: '#888', fontStyle: 'italic', marginBottom: '10px', lineHeight: 1.3 }}>
+          {meal.subtext}
+        </div>
+      )}
+
+      {meal.isLunch && (
+        <div style={{ fontSize: '11px', color: '#666', fontStyle: 'italic', marginBottom: '10px', lineHeight: 1.3 }}>
+          * Subscription meal · balanced portion as delivered
+        </div>
+      )}
+
       {showDirections && meal.direction && (
         <div style={{
           fontSize: '12px',
@@ -2203,8 +2348,59 @@ function MealCard({ meal }) {
         borderTop: '1px solid #1a1a1a',
         paddingTop: '8px',
       }}>
-        {meal.kcal} kcal · {meal.p}P · {meal.c}C · {meal.f}F
+        {meal.kcal} kcal · {meal.p}P · {meal.c}C · {meal.f}F · {meal.fiber} fiber
       </div>
+
+      {isSnack && isSwapOpen && (
+        <div style={{
+          marginTop: '12px',
+          borderTop: '1px dashed #262626',
+          paddingTop: '12px',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '6px',
+        }}>
+          <div style={{ fontSize: '10px', color: '#888', letterSpacing: '0.05em', fontWeight: 'bold', textTransform: 'uppercase', marginBottom: '2px' }}>
+            SELECT A SNACK:
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '6px' }}>
+            {SNACK_MENU.map(opt => {
+              const isSelected = opt.id === currentSnackId;
+              return (
+                <button
+                  key={opt.id}
+                  onClick={() => onSwap(opt.id)}
+                  style={{
+                    background: isSelected ? 'rgba(251, 191, 36, 0.1)' : '#161616',
+                    border: isSelected ? '1px solid #fbbf24' : '1px solid #262626',
+                    padding: '8px 10px',
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    cursor: 'pointer',
+                    width: '100%',
+                    textAlign: 'left',
+                    transition: 'all 0.15s',
+                  }}
+                >
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '1px' }}>
+                    <span style={{ fontSize: '12px', fontWeight: 600, color: isSelected ? '#fbbf24' : '#fafafa' }}>
+                      {opt.name}
+                    </span>
+                    <span style={{ fontSize: '10px', color: '#666' }}>
+                      {opt.qty}
+                    </span>
+                  </div>
+                  <div style={{ fontSize: '11px', fontFamily: 'monospace', color: isSelected ? '#fbbf24' : '#888', textAlign: 'right' }}>
+                    <div>{opt.kcal} kcal · {opt.p}P</div>
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
+

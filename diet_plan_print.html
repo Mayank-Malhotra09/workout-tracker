@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Lift Log — Day-Wise Meal Plan</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Anton&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap');
+
+    @page {
+      size: A4 portrait;
+      margin: 8mm 9mm;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: #0c0c0c;
+      color: #eaeaea;
+      font-size: 9.5px;
+      line-height: 1.35;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .page {
+      width: 100%;
+      height: 280mm;
+      max-height: 280mm;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .page-break {
+      page-break-after: always;
+      break-after: page;
+    }
+
+    /* Header */
+    .header {
+      border-bottom: 2px solid #262626;
+      padding-bottom: 6px;
+      margin-bottom: 7px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    .title-group h1 {
+      font-family: 'Anton', sans-serif;
+      font-size: 26px;
+      letter-spacing: 0.05em;
+      color: #fafafa;
+      line-height: 1;
+      text-transform: uppercase;
+    }
+
+    .title-group .subtitle {
+      font-size: 9px;
+      color: #fbbf24;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
+
+    .target-badges {
+      display: flex;
+      gap: 6px;
+    }
+
+    .badge {
+      background: #171717;
+      border: 1px solid #333;
+      padding: 3px 7px;
+      border-radius: 3px;
+      text-align: right;
+    }
+
+    .badge .val {
+      font-family: 'Anton', sans-serif;
+      font-size: 13px;
+      color: #fbbf24;
+      line-height: 1;
+    }
+
+    .badge .lbl {
+      font-size: 7.5px;
+      color: #888;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    /* Rules banner */
+    .rules-bar {
+      background: #141414;
+      border: 1px solid #262626;
+      border-left: 3px solid #fbbf24;
+      padding: 5px 8px;
+      margin-bottom: 8px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4px 12px;
+      font-size: 8.5px;
+      color: #bbb;
+    }
+
+    .rules-bar .rule-item {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .rules-bar .rule-item strong {
+      color: #fbbf24;
+    }
+
+    /* Section Headings */
+    .section-title {
+      font-family: 'Anton', sans-serif;
+      font-size: 14px;
+      letter-spacing: 0.08em;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 6px;
+      padding-bottom: 2px;
+      border-bottom: 1px solid #222;
+      text-transform: uppercase;
+    }
+
+    .section-title .tag {
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-size: 8px;
+      font-weight: 700;
+      background: #fbbf24;
+      color: #000;
+      padding: 1px 5px;
+      border-radius: 2px;
+      letter-spacing: 0.05em;
+    }
+
+    /* Day Columns Layout */
+    .days-grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 7px;
+      flex: 1;
+    }
+
+    .days-grid-4 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 7px 8px;
+      flex: 1;
+    }
+
+    .day-card {
+      background: #111111;
+      border: 1px solid #262626;
+      border-radius: 4px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .day-header {
+      background: #181818;
+      padding: 4px 7px;
+      border-bottom: 1px solid #282828;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+
+    .day-name {
+      font-family: 'Anton', sans-serif;
+      font-size: 14px;
+      color: #fbbf24;
+      letter-spacing: 0.05em;
+      line-height: 1;
+    }
+
+    .day-focus {
+      font-size: 8px;
+      color: #888;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    .meals-list {
+      padding: 4px 5px;
+      display: flex;
+      flex-direction: column;
+      gap: 4.5px;
+      flex: 1;
+    }
+
+    .meal-box {
+      background: #161616;
+      border: 1px solid #222;
+      border-left: 2.5px solid #333;
+      padding: 3.5px 5px;
+      border-radius: 2px;
+    }
+
+    .meal-box.preworkout {
+      border-left-color: #64748b;
+      background: #13171d;
+    }
+
+    .meal-box.breakfast {
+      border-left-color: #fbbf24;
+    }
+
+    .meal-box.snack {
+      border-left-color: #fbbf24;
+    }
+
+    .meal-box.dinner {
+      border-left-color: #444;
+    }
+
+    .meal-box.offplan {
+      border-left-color: #ef4444;
+      background: #1a1212;
+    }
+
+    .meal-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 7.5px;
+      font-weight: 700;
+      color: #fbbf24;
+      letter-spacing: 0.04em;
+      margin-bottom: 1px;
+    }
+
+    .meal-meta .time {
+      color: #777;
+      font-weight: 600;
+    }
+
+    .meal-title {
+      font-size: 9px;
+      font-weight: 600;
+      color: #ffffff;
+      line-height: 1.2;
+    }
+
+    .meal-desc {
+      font-size: 7.5px;
+      color: #8a8a8a;
+      line-height: 1.2;
+      margin-top: 1px;
+    }
+
+    .meal-note {
+      font-size: 7px;
+      color: #94a3b8;
+      font-style: italic;
+      margin-top: 1px;
+    }
+
+    .meal-macros {
+      font-family: monospace;
+      font-size: 7px;
+      color: #666;
+      border-top: 1px dotted #252525;
+      margin-top: 2px;
+      padding-top: 1.5px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .meal-macros span strong {
+      color: #aaa;
+    }
+
+    .day-total-footer {
+      background: #151515;
+      border-top: 1px solid #262626;
+      padding: 4px 7px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 8px;
+    }
+
+    .day-total-footer .total-kcal {
+      font-family: 'Anton', sans-serif;
+      font-size: 13px;
+      color: #fbbf24;
+      line-height: 1;
+    }
+
+    .day-total-footer .macro-summary {
+      font-family: monospace;
+      font-size: 7.5px;
+      color: #aaa;
+    }
+
+    .day-total-footer .macro-summary strong {
+      color: #fbbf24;
+    }
+
+    /* Page 2 Snacks Directory Table */
+    .snack-directory {
+      background: #111;
+      border: 1px solid #262626;
+      border-radius: 4px;
+      padding: 6px 8px;
+      margin-top: 6px;
+    }
+
+    .snack-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 5px;
+      margin-top: 4px;
+    }
+
+    .snack-item {
+      background: #161616;
+      border: 1px solid #222;
+      border-left: 2px solid #fbbf24;
+      padding: 4px 5px;
+      border-radius: 2px;
+    }
+
+    .snack-item .s-name {
+      font-weight: 700;
+      font-size: 8.5px;
+      color: #fafafa;
+      line-height: 1.15;
+    }
+
+    .snack-item .s-qty {
+      font-size: 7.2px;
+      color: #777;
+      margin-top: 1px;
+    }
+
+    .snack-item .s-mac {
+      font-family: monospace;
+      font-size: 7.2px;
+      color: #fbbf24;
+      margin-top: 2px;
+      border-top: 1px solid #222;
+      padding-top: 1px;
+    }
+
+    /* Footer walk reminder */
+    .footer-reminder {
+      background: #141414;
+      border: 1px solid #222;
+      padding: 3.5px 8px;
+      font-size: 8px;
+      color: #888;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 5px;
+    }
+
+    .footer-reminder strong {
+      color: #fbbf24;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==================== PAGE 1: GYM DAYS ==================== -->
+  <div class="page page-break">
+    <div>
+      <!-- Top Header -->
+      <div class="header">
+        <div class="title-group">
+          <h1>LIFT LOG · DIET BLUEPRINT</h1>
+          <div class="subtitle">MORNING TRAINING REGIMEN (~6:30 AM) · HIGH PROTEIN CUT</div>
+        </div>
+        <div class="target-badges">
+          <div class="badge">
+            <div class="val">~1,800</div>
+            <div class="lbl">Kcal Target</div>
+          </div>
+          <div class="badge">
+            <div class="val">150g+</div>
+            <div class="lbl">Daily Protein</div>
+          </div>
+          <div class="badge">
+            <div class="val">30g</div>
+            <div class="lbl">Target Fiber</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Core Rules Bar -->
+      <div class="rules-bar">
+        <div class="rule-item">⚡ <strong>Gym Days:</strong> Banana pre-lift (~6:15 AM), big protein breakfast right after (~8:15 AM)</div>
+        <div class="rule-item">🕒 <strong>Snack 2 (~5 PM):</strong> Critical anchor — kills evening hunger & prevents night bingeing</div>
+        <div class="rule-item">🥗 <strong>Snack Rule:</strong> Always protein + fiber, never naked carbs. Snacks are NOT optional</div>
+        <div class="rule-item">🚶 <strong>Daily Walk:</strong> Moved to post-dinner (~15 min) to aid digestion & protect morning sleep</div>
+      </div>
+
+      <!-- Section Title -->
+      <div class="section-title">
+        <span>PART 1 · GYM TRAINING DAYS (MON · WED · FRI)</span>
+        <span class="tag">6 MEAL SLOTS</span>
+      </div>
+    </div>
+
+    <!-- 3-Column Gym Days Grid -->
+    <div class="days-grid-3">
+
+      <!-- MONDAY -->
+      <div class="day-card">
+        <div class="day-header">
+          <span class="day-name">MONDAY</span>
+          <span class="day-focus">GYM · PUSH (CHEST/SH/TRI)</span>
+        </div>
+        <div class="meals-list">
+          <div class="meal-box preworkout">
+            <div class="meal-meta"><span class="time">~6:15 AM</span><span>PRE-WORKOUT</span></div>
+            <div class="meal-title">1 Banana + Black Coffee</div>
+            <div class="meal-desc">Fast fuel before lifting — nothing heavy</div>
+            <div class="meal-macros"><span>105 kcal</span><span>1P · 27C · 0F · 3 fiber</span></div>
+          </div>
+
+          <div class="meal-box breakfast">
+            <div class="meal-meta"><span class="time">~8:15 AM</span><span>BREAKFAST · POST-LIFT</span></div>
+            <div class="meal-title">2 Whole Eggs + Skyr + Whey Shake</div>
+            <div class="meal-desc">2 eggs · 100g skyr · 1 scoop whey</div>
+            <div class="meal-note">* Post-workout meal — protein within 1hr</div>
+            <div class="meal-macros"><span>350 kcal</span><span>42P · 10C · 12F · 1 fiber</span></div>
+          </div>
+
+          <div class="meal-box snack">
+            <div class="meal-meta"><span class="time">~11:30 AM</span><span>SNACK 1</span></div>
+            <div class="meal-title">Skyr + Fruit</div>
+            <div class="meal-desc">150g skyr + apple or fresh berries</div>
+            <div class="meal-macros"><span>150 kcal</span><span>18P · 18C · 1F · 3 fiber</span></div>
+          </div>
+
+          <div class="meal-box">
+            <div class="meal-meta"><span class="time">1:30 PM</span><span>LUNCH</span></div>
+            <div class="meal-title">Subscription Portioned Meal</div>
+            <div class="meal-desc">As delivered — balanced calorie portion</div>
+            <div class="meal-macros"><span>550 kcal</span><span>35P · 55C · 18F · 8 fiber</span></div>
+          </div>
+
+          <div class="meal-box snack">
+            <div class="meal-meta"><span class="time">~5:00 PM</span><span>SNACK 2 (KEY ANCHOR)</span></div>
+            <div class="meal-title">Protein Shake + Banana</div>
+            <div class="meal-desc">1 scoop whey + 1 banana</div>
+            <div class="meal-macros"><span>220 kcal</span><span>27P · 28C · 1F · 3 fiber</span></div>
+          </div>
+
+          <div class="meal-box dinner">
+            <div class="meal-meta"><span class="time">9:00 PM</span><span>DINNER</span></div>
+            <div class="meal-title">Chicken Salad + Small Carb</div>
+            <div class="meal-desc">120g chicken breast · veggies · 100g rice/1 roti</div>
+            <div class="meal-macros"><span>400 kcal</span><span>42P · 25C · 12F · 5 fiber</span></div>
+          </div>
+        </div>
+        <div class="day-total-footer">
+          <div><span class="total-kcal">1,775</span> <span style="color:#666;font-size:7px;">KCAL</span></div>
+          <div class="macro-summary"><strong>165g P</strong> · 163g C · 44g F · 23g fib</div>
+        </div>
+      </div>
+
+      <!-- WEDNESDAY -->
+      <div class="day-card">
+        <div class="day-header">
+          <span class="day-name">WEDNESDAY</span>
+          <span class="day-focus">GYM · PULL (BACK/BICEPS)</span>
+        </div>
+        <div class="meals-list">
+          <div class="meal-box preworkout">
+            <div class="meal-meta"><span class="time">~6:15 AM</span><span>PRE-WORKOUT</span></div>
+            <div class="meal-title">1 Banana + Black Coffee</div>
+            <div class="meal-desc">Fast fuel before lifting — nothing heavy</div>
+            <div class="meal-macros"><span>105 kcal</span><span>1P · 27C · 0F · 3 fiber</span></div>
+          </div>
+
+          <div class="meal-box breakfast">
+            <div class="meal-meta"><span class="time">~8:15 AM</span><span>BREAKFAST · POST-LIFT</span></div>
+            <div class="meal-title">2 Whole Eggs + Skyr + Whey Shake</div>
+            <div class="meal-desc">2 eggs · 100g skyr · 1 scoop whey</div>
+            <div class="meal-note">* Post-workout meal — protein within 1hr</div>
+            <div class="meal-macros"><span>350 kcal</span><span>42P · 10C · 12F · 1 fiber</span></div>
+          </div>
+
+          <div class="meal-box snack">
+            <div class="meal-meta"><span class="time">~11:30 AM</span><span>SNACK 1</span></div>
+            <div class="meal-title">Skyr + Fruit</div>
+            <div class="meal-desc">150g skyr + apple or fresh berries</div>
+            <div class="meal-macros"><span>150 kcal</span><span>18P · 18C · 1F · 3 fiber</span></div>
+          </div>
+
+          <div class="meal-box">
+            <div class="meal-meta"><span class="time">1:30 PM</span><span>LUNCH</span></div>
+            <div class="meal-title">Subscription Portioned Meal</div>
+            <div class="meal-desc">As delivered — balanced calorie portion</div>
+            <div class="meal-macros"><span>550 kcal</span><span>35P · 55C · 18F · 8 fiber</span></div>
+          </div>
+
+          <div class="meal-box snack">
+            <div class="meal-meta"><span class="time">~5:00 PM</span><span>SNACK 2 (KEY ANCHOR)</span></div>
+            <div class="meal-title">Protein Shake + Banana</div>
+            <div class="meal-desc">1 scoop whey + 1 banana</div>
+            <div class="meal-macros"><span>220 kcal</span><span>27P · 28C · 1F · 3 fiber</span></div>
+          </div>
+
+          <div class="meal-box dinner">
+            <div class="meal-meta"><span class="time">9:00 PM</span><span>DINNER</span></div>
+            <div class="meal-title">Chicken Salad + Small Carb</div>
+            <div class="meal-desc">120g chicken breast · veggies · 100g rice/1 roti</div>
+            <div class="meal-macros"><span>400 kcal</span><span>42P · 25C · 12F · 5 fiber</span></div>
+          </div>
+        </div>
+        <div class="day-total-footer">
+          <div><span class="total-kcal">1,775</span> <span style="color:#666;font-size:7px;">KCAL</span></div>
+          <div class="macro-summary"><strong>165g P</strong> · 163g C · 44g F · 23g fib</div>
+        </div>
+      </div>
+
+      <!-- FRIDAY -->
+      <div class="day-card">
+        <div class="day-header">
+          <span class="day-name">FRIDAY</span>
+          <span class="day-focus">GYM · LEGS (LOWER BODY)</span>
+        </div>
+        <div class="meals-list">
+          <div class="meal-box preworkout">
+            <div class="meal-meta"><span class="time">~6:15 AM</span><span>PRE-WORKOUT</span></div>
+            <div class="meal-title">1 Banana + Black Coffee</div>
+            <div class="meal-desc">Fast fuel before lifting — nothing heavy</div>
+            <div class="meal-macros"><span>105 kcal</span><span>1P · 27C · 0F · 3 fiber</span></div>
+          </div>
+
+          <div class="meal-box breakfast">
+            <div class="meal-meta"><span class="time">~8:15 AM</span><span>BREAKFAST · POST-LIFT</span></div>
+            <div class="meal-title">2 Whole Eggs + Skyr + Whey Shake</div>
+            <div class="meal-desc">2 eggs · 100g skyr · 1 scoop whey</div>
+            <div class="meal-note">* Post-workout meal — protein within 1hr</div>
+            <div class="meal-macros"><span>350 kcal</span><span>42P · 10C · 12F · 1 fiber</span></div>
+          </div>
+
+          <div class="meal-box snack">
+            <div class="meal-meta"><span class="time">~11:30 AM</span><span>SNACK 1</span></div>
+            <div class="meal-title">Skyr + Fruit</div>
+            <div class="meal-desc">150g skyr + apple or fresh berries</div>
+            <div class="meal-macros"><span>150 kcal</span><span>18P · 18C · 1F · 3 fiber</span></div>
+          </div>
+
+          <div class="meal-box">
+            <div class="meal-meta"><span class="time">1:30 PM</span><span>LUNCH</span></div>
+            <div class="meal-title">Subscription Portioned Meal</div>
+            <div class="meal-desc">As delivered — balanced calorie portion</div>
+            <div class="meal-macros"><span>550 kcal</span><span>35P · 55C · 18F · 8 fiber</span></div>
+          </div>
+
+          <div class="meal-box snack">
+            <div class="meal-meta"><span class="time">~5:00 PM</span><span>SNACK 2 (KEY ANCHOR)</span></div>
+            <div class="meal-title">Protein Shake + Banana</div>
+            <div class="meal-desc">1 scoop whey + 1 banana</div>
+            <div class="meal-macros"><span>220 kcal</span><span>27P · 28C · 1F · 3 fiber</span></div>
+          </div>
+
+          <div class="meal-box dinner">
+            <div class="meal-meta"><span class="time">9:00 PM</span><span>DINNER (HIGHER CARB)</span></div>
+            <div class="meal-title">Chicken Breast Salad + Pasta</div>
+            <div class="meal-desc">120g chicken breast · veggies · 50g cooked pasta</div>
+            <div class="meal-macros"><span>480 kcal</span><span>44P · 55C · 10F · 5 fiber</span></div>
+          </div>
+        </div>
+        <div class="day-total-footer">
+          <div><span class="total-kcal">1,855</span> <span style="color:#666;font-size:7px;">KCAL</span></div>
+          <div class="macro-summary"><strong>167g P</strong> · 193g C · 42g F · 23g fib</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Bottom Page Note -->
+    <div class="footer-reminder">
+      <span>🚶 <strong>Daily Post-Dinner Walk:</strong> 15 minutes brisk walk after dinner aids digestion, reduces insulin spikes, and protects early sleep.</span>
+      <span>PAGE 1 OF 2 · LIFT LOG</span>
+    </div>
+  </div>
+
+  <!-- ==================== PAGE 2: REST DAYS & SNACKS ==================== -->
+  <div class="page">
+    <div>
+      <!-- Top Header -->
+      <div class="header">
+        <div class="title-group">
+          <h1>LIFT LOG · REST DAYS & SNACKS</h1>
+          <div class="subtitle">ACTIVE RECOVERY (TUE · THU · SAT · SUN) + 8-ITEM SNACK DIRECTORY</div>
+        </div>
+        <div class="target-badges">
+          <div class="badge">
+            <div class="val">5 MEALS</div>
+            <div class="lbl">Rest Structure</div>
+          </div>
+          <div class="badge">
+            <div class="val">1 FLEX/WK</div>
+            <div class="lbl">Sunday Dinner</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section Title -->
+      <div class="section-title">
+        <span>PART 2 · REST & RECOVERY DAYS (NO MORNING LIFT · BREAKFAST @ 9:00 AM)</span>
+        <span class="tag">5 MEALS</span>
+      </div>
+    </div>
+
+    <!-- 4-Grid Rest Days Layout -->
+    <div class="days-grid-4">
+
+      <!-- TUESDAY -->
+      <div class="day-card">
+        <div class="day-header">
+          <span class="day-name">TUESDAY</span>
+          <span class="day-focus">REST · SKIPPING / 30-45 MIN WALK</span>
+        </div>
+        <div class="meals-list">
+          <div class="meal-box breakfast">
+            <div class="meal-meta"><span class="time">9:00 AM</span><span>BREAKFAST</span></div>
+            <div class="meal-title">Overnight High-Protein Oats</div>
+            <div class="meal-desc">40g oats · 150g skyr · milk · 1 scoop whey</div>
+            <div class="meal-macros"><span>415 kcal</span><span>47P · 41C · 8F · 6 fiber</span></div>
+          </div>
+          <div class="meal-box snack">
+            <div class="meal-meta"><span class="time">~11:30 AM</span><span>SNACK 1</span></div>
+            <div class="meal-title">Skyr + Fruit (or any swap)</div>
+            <div class="meal-desc">150g skyr + apple or fresh berries</div>
+            <div class="meal-macros"><span>150 kcal</span><span>18P · 18C · 1F · 3 fiber</span></div>
+          </div>
+          <div class="meal-box">
+            <div class="meal-meta"><span class="time">1:30 PM</span><span>LUNCH</span></div>
+            <div class="meal-title">Subscription Portioned Meal</div>
+            <div class="meal-desc">As delivered — balanced portion</div>
+            <div class="meal-macros"><span>550 kcal</span><span>35P · 55C · 18F · 8 fiber</span></div>
+          </div>
+          <div class="meal-box snack">
+            <div class="meal-meta"><span class="time">~5:00 PM</span><span>SNACK 2</span></div>
+            <div class="meal-title">Protein Shake + Banana</div>
+            <div class="meal-desc">1 scoop whey + 1 banana</div>
+            <div class="meal-macros"><span>220 kcal</span><span>27P · 28C · 1F · 3 fiber</span></div>
+          </div>
+          <div class="meal-box dinner">
+            <div class="meal-meta"><span class="time">9:00 PM</span><span>DINNER</span></div>
+            <div class="meal-title">Paneer Salad</div>
+            <div class="meal-desc">100g low-fat paneer · raw veggies · lemon dressing</div>
+            <div class="meal-macros"><span>380 kcal</span><span>25P · 15C · 22F · 4 fiber</span></div>
+          </div>
+        </div>
+        <div class="day-total-footer">
+          <div><span class="total-kcal">1,715</span> <span style="color:#666;font-size:7px;">KCAL</span></div>
+          <div class="macro-summary"><strong>152g P</strong> · 149g C · 50g F · 24g fib</div>
+        </div>
+      </div>
+
+      <!-- THURSDAY -->
+      <div class="day-card">
+        <div class="day-header">
+          <span class="day-name">THURSDAY</span>
+          <span class="day-focus">REST · SKIPPING / MOBILITY</span>
+        </div>
+        <div class="meals-list">
+          <div class="meal-box breakfast">
+            <div class="meal-meta"><span class="time">9:00 AM</span><span>BREAKFAST</span></div>
+            <div class="meal-title">Overnight High-Protein Oats</div>
+            <div class="meal-desc">40g oats · 150g skyr · milk · 1 scoop whey</div>
+            <div class="meal-macros"><span>415 kcal</span><span>47P · 41C · 8F · 6 fiber</span></div>
+          </div>
+          <div class="meal-box snack">
+            <div class="meal-meta"><span class="time">~11:30 AM</span><span>SNACK 1</span></div>
+            <div class="meal-title">Skyr + Fruit (or any swap)</div>
+            <div class="meal-desc">150g skyr + apple or fresh berries</div>
+            <div class="meal-macros"><span>150 kcal</span><span>18P · 18C · 1F · 3 fiber</span></div>
+          </div>
+          <div class="meal-box">
+            <div class="meal-meta"><span class="time">1:30 PM</span><span>LUNCH</span></div>
+            <div class="meal-title">Subscription Portioned Meal</div>
+            <div class="meal-desc">As delivered — balanced portion</div>
+            <div class="meal-macros"><span>550 kcal</span><span>35P · 55C · 18F · 8 fiber</span></div>
+          </div>
+          <div class="meal-box snack">
+            <div class="meal-meta"><span class="time">~5:00 PM</span><span>SNACK 2</span></div>
+            <div class="meal-title">Protein Shake + Banana</div>
+            <div class="meal-desc">1 scoop whey + 1 banana</div>
+            <div class="meal-macros"><span>220 kcal</span><span>27P · 28C · 1F · 3 fiber</span></div>
+          </div>
+          <div class="meal-box dinner">
+            <div class="meal-meta"><span class="time">9:00 PM</span><span>DINNER</span></div>
+            <div class="meal-title">Chickpea Salad + Protein Topping</div>
+            <div class="meal-desc">Chickpea salad bowl · 100g paneer or chicken</div>
+            <div class="meal-macros"><span>420 kcal</span><span>32P · 40C · 13F · 9 fiber</span></div>
+          </div>
+        </div>
+        <div class="day-total-footer">
+          <div><span class="total-kcal">1,755</span> <span style="color:#666;font-size:7px;">KCAL</span></div>
+          <div class="macro-summary"><strong>159g P</strong> · 174g C · 41g F · 29g fib</div>
+        </div>
+      </div>
+
+      <!-- SATURDAY -->
+      <div class="day-card">
+        <div class="day-header">
+          <span class="day-name">SATURDAY</span>
+          <span class="day-focus">REST · 45-60 MIN RECREATION/WALK</span>
+        </div>
+        <div class="meals-list">
+          <div class="meal-box breakfast">
+            <div class="meal-meta"><span class="time">9:00 AM</span><span>BREAKFAST</span></div>
+            <div class="meal-title">Overnight High-Protein Oats</div>
+            <div class="meal-desc">40g oats · 150g skyr · milk · 1 scoop whey</div>
+            <div class="meal-macros"><span>415 kcal</span><span>47P · 41C · 8F · 6 fiber</span></div>
+          </div>
+          <div class="meal-box snack">
+            <div class="meal-meta"><span class="time">~11:30 AM</span><span>SNACK 1</span></div>
+            <div class="meal-title">Skyr + Fruit (or any swap)</div>
+            <div class="meal-desc">150g skyr + apple or fresh berries</div>
+            <div class="meal-macros"><span>150 kcal</span><span>18P · 18C · 1F · 3 fiber</span></div>
+          </div>
+          <div class="meal-box">
+            <div class="meal-meta"><span class="time">1:30 PM</span><span>LUNCH</span></div>
+            <div class="meal-title">Subscription Portioned Meal</div>
+            <div class="meal-desc">As delivered — balanced portion</div>
+            <div class="meal-macros"><span>550 kcal</span><span>35P · 55C · 18F · 8 fiber</span></div>
+          </div>
+          <div class="meal-box snack">
+            <div class="meal-meta"><span class="time">~5:00 PM</span><span>SNACK 2</span></div>
+            <div class="meal-title">Protein Shake + Banana</div>
+            <div class="meal-desc">1 scoop whey + 1 banana</div>
+            <div class="meal-macros"><span>220 kcal</span><span>27P · 28C · 1F · 3 fiber</span></div>
+          </div>
+          <div class="meal-box dinner">
+            <div class="meal-meta"><span class="time">9:00 PM</span><span>DINNER</span></div>
+            <div class="meal-title">Paneer or Chickpea Salad</div>
+            <div class="meal-desc">100g paneer or boiled chickpeas · veggies</div>
+            <div class="meal-macros"><span>400 kcal</span><span>28P · 30C · 16F · 6 fiber</span></div>
+          </div>
+        </div>
+        <div class="day-total-footer">
+          <div><span class="total-kcal">1,735</span> <span style="color:#666;font-size:7px;">KCAL</span></div>
+          <div class="macro-summary"><strong>155g P</strong> · 164g C · 44g F · 26g fib</div>
+        </div>
+      </div>
+
+      <!-- SUNDAY -->
+      <div class="day-card">
+        <div class="day-header">
+          <span class="day-name">SUNDAY</span>
+          <span class="day-focus">FLEX RECOVERY · FULL REST</span>
+        </div>
+        <div class="meals-list">
+          <div class="meal-box breakfast">
+            <div class="meal-meta"><span class="time">9:30 AM</span><span>BREAKFAST</span></div>
+            <div class="meal-title">Oats OR Eggs Combo (Choice)</div>
+            <div class="meal-desc">1 portion high-protein breakfast</div>
+            <div class="meal-macros"><span>400 kcal</span><span>45P · 30C · 10F · 4 fiber</span></div>
+          </div>
+          <div class="meal-box snack">
+            <div class="meal-meta"><span class="time">~11:30 AM</span><span>SNACK 1</span></div>
+            <div class="meal-title">Skyr + Fruit (or any swap)</div>
+            <div class="meal-desc">150g skyr + apple or fresh berries</div>
+            <div class="meal-macros"><span>150 kcal</span><span>18P · 18C · 1F · 3 fiber</span></div>
+          </div>
+          <div class="meal-box">
+            <div class="meal-meta"><span class="time">1:30 PM</span><span>LUNCH</span></div>
+            <div class="meal-title">Subscription Portioned Meal</div>
+            <div class="meal-desc">As delivered — balanced portion</div>
+            <div class="meal-macros"><span>550 kcal</span><span>35P · 55C · 18F · 8 fiber</span></div>
+          </div>
+          <div class="meal-box snack">
+            <div class="meal-meta"><span class="time">~5:00 PM</span><span>SNACK 2</span></div>
+            <div class="meal-title">Protein Shake + Banana</div>
+            <div class="meal-desc">1 scoop whey + 1 banana</div>
+            <div class="meal-macros"><span>220 kcal</span><span>27P · 28C · 1F · 3 fiber</span></div>
+          </div>
+          <div class="meal-box offplan">
+            <div class="meal-meta"><span class="time">9:00 PM</span><span style="color:#ef4444;">DINNER · 1 OFF-PLAN MEAL</span></div>
+            <div class="meal-title">Social / Free Choice Dinner</div>
+            <div class="meal-desc">Target 500-600 kcal · log it · don't binge</div>
+            <div class="meal-macros"><span>600 kcal</span><span>30P · 50C · 28F · 4 fiber</span></div>
+          </div>
+        </div>
+        <div class="day-total-footer">
+          <div><span class="total-kcal">1,920</span> <span style="color:#666;font-size:7px;">KCAL</span></div>
+          <div class="macro-summary"><strong>155g P</strong> · 181g C · 58g F · 24g fib</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Snack Swap Reference Directory -->
+    <div class="snack-directory">
+      <div style="font-family:'Anton',sans-serif;font-size:11px;color:#fbbf24;letter-spacing:0.06em;text-transform:uppercase;">
+        INTERCHANGEABLE SNACK DIRECTORY (SWAP ANYTIME)
+      </div>
+      <div class="snack-grid">
+        <div class="snack-item">
+          <div class="s-name">Protein Shake + Banana</div>
+          <div class="s-qty">1 scoop whey + 1 banana</div>
+          <div class="s-mac">220 kcal · 27P · 28C · 1F · 3 fib</div>
+        </div>
+        <div class="snack-item">
+          <div class="s-name">Cottage Cheese Bowl</div>
+          <div class="s-qty">100g low-fat cottage + herbs</div>
+          <div class="s-mac">150 kcal · 20P · 6C · 5F · 1 fib</div>
+        </div>
+        <div class="snack-item">
+          <div class="s-name">Skyr + Fresh Fruit</div>
+          <div class="s-qty">150g skyr + apple/berries</div>
+          <div class="s-mac">150 kcal · 18P · 18C · 1F · 3 fib</div>
+        </div>
+        <div class="snack-item">
+          <div class="s-name">Greek Yogurt + Almonds</div>
+          <div class="s-qty">150g greek yogurt + 15g almonds</div>
+          <div class="s-mac">230 kcal · 17P · 12C · 13F · 2 fib</div>
+        </div>
+        <div class="snack-item">
+          <div class="s-name">Paneer + Cucumber</div>
+          <div class="s-qty">80g low-fat paneer + cucumber</div>
+          <div class="s-mac">180 kcal · 16P · 6C · 11F · 1 fib</div>
+        </div>
+        <div class="snack-item">
+          <div class="s-name">Roasted Chana + Curd</div>
+          <div class="s-qty">40g chana + 100g curd</div>
+          <div class="s-mac">230 kcal · 15P · 30C · 5F · 6 fib</div>
+        </div>
+        <div class="snack-item">
+          <div class="s-name">Boiled Eggs + Fruit</div>
+          <div class="s-qty">2 boiled eggs + 1 fruit</div>
+          <div class="s-mac">190 kcal · 14P · 15C · 9F · 2 fib</div>
+        </div>
+        <div class="snack-item">
+          <div class="s-name">Sprouts Chaat Bowl</div>
+          <div class="s-qty">1 bowl moong sprouts + lemon</div>
+          <div class="s-mac">160 kcal · 12P · 24C · 2F · 7 fib</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Page Note -->
+    <div class="footer-reminder">
+      <span>💧 <strong>Hydration:</strong> Aim for 3.5–4.5L water daily. Keep sodium consistent. Track weekly averages, not daily fluctuations.</span>
+      <span>PAGE 2 OF 2 · LIFT LOG</span>
+    </div>
+  </div>
+
+</body>
+</html>

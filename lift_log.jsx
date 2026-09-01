@@ -69,25 +69,28 @@ const SNACK_MENU = [
 
 const DIET_PLAN = {
   Mon: { tag: 'Gym · Push Day',
-    breakfast: { time: '9:00 AM',  item: '2 whole eggs + skyr + protein shake', qty: '2 eggs · 100g skyr · 1 scoop whey', kcal: 350, p: 42, c: 10, f: 12, fiber: 1 },
-    lunch:     { time: '1:30 PM',  item: 'Subscription portioned meal',          qty: 'As delivered — balanced portion',   kcal: 550, p: 35, c: 55, f: 18, fiber: 8 },
-    dinner:    { time: '9:00 PM',  item: 'Chicken breast salad + small carb',    qty: '120g chicken · veggies · 100g rice or 1 chapati', kcal: 400, p: 42, c: 25, f: 12, fiber: 5 } },
+    preworkout: { time: '~6:15 AM', type: 'PRE-WORKOUT', item: '1 banana + black coffee', qty: 'Fast fuel before lifting — nothing heavy', kcal: 105, p: 1, c: 27, f: 0, fiber: 3, isPreWorkout: true },
+    breakfast:  { time: '~8:15 AM', type: 'BREAKFAST · POST-WORKOUT', note: 'This is your post-workout meal now — protein within ~1hr of lifting', item: '2 whole eggs + skyr + protein shake', qty: '2 eggs · 100g skyr · 1 scoop whey', kcal: 350, p: 42, c: 10, f: 12, fiber: 1 },
+    lunch:      { time: '1:30 PM',  item: 'Subscription portioned meal',          qty: 'As delivered — balanced portion',   kcal: 550, p: 35, c: 55, f: 18, fiber: 8 },
+    dinner:     { time: '9:00 PM',  item: 'Chicken breast salad + small carb',    qty: '120g chicken · veggies · 100g rice or 1 chapati', kcal: 400, p: 42, c: 25, f: 12, fiber: 5 } },
   Tue: { tag: 'Rest · Skipping',
     breakfast: { time: '9:00 AM',  item: 'Overnight high-protein oats',          qty: '40g oats · 150g skyr · milk · 1 scoop whey', kcal: 415, p: 47, c: 41, f: 8, fiber: 6 },
     lunch:     { time: '1:30 PM',  item: 'Subscription portioned meal',          qty: 'As delivered',                       kcal: 550, p: 35, c: 55, f: 18, fiber: 8 },
     dinner:    { time: '9:00 PM',  item: 'Paneer salad',                         qty: '100g low-fat paneer · veggies · lemon dressing', kcal: 380, p: 25, c: 15, f: 22, fiber: 4 } },
   Wed: { tag: 'Gym · Pull Day',
-    breakfast: { time: '9:00 AM',  item: '2 whole eggs + skyr + protein shake', qty: '2 eggs · 100g skyr · 1 scoop whey',  kcal: 350, p: 42, c: 10, f: 12, fiber: 1 },
-    lunch:     { time: '1:30 PM',  item: 'Subscription portioned meal',          qty: 'As delivered',                       kcal: 550, p: 35, c: 55, f: 18, fiber: 8 },
-    dinner:    { time: '9:00 PM',  item: 'Chicken breast salad + small carb',    qty: '120g chicken · veggies · 100g rice or 1 chapati', kcal: 400, p: 42, c: 25, f: 12, fiber: 5 } },
+    preworkout: { time: '~6:15 AM', type: 'PRE-WORKOUT', item: '1 banana + black coffee', qty: 'Fast fuel before lifting — nothing heavy', kcal: 105, p: 1, c: 27, f: 0, fiber: 3, isPreWorkout: true },
+    breakfast:  { time: '~8:15 AM', type: 'BREAKFAST · POST-WORKOUT', note: 'This is your post-workout meal now — protein within ~1hr of lifting', item: '2 whole eggs + skyr + protein shake', qty: '2 eggs · 100g skyr · 1 scoop whey',  kcal: 350, p: 42, c: 10, f: 12, fiber: 1 },
+    lunch:      { time: '1:30 PM',  item: 'Subscription portioned meal',          qty: 'As delivered',                       kcal: 550, p: 35, c: 55, f: 18, fiber: 8 },
+    dinner:     { time: '9:00 PM',  item: 'Chicken breast salad + small carb',    qty: '120g chicken · veggies · 100g rice or 1 chapati', kcal: 400, p: 42, c: 25, f: 12, fiber: 5 } },
   Thu: { tag: 'Rest · Skipping',
     breakfast: { time: '9:00 AM',  item: 'Overnight high-protein oats',          qty: '40g oats · 150g skyr · milk · 1 scoop whey', kcal: 415, p: 47, c: 41, f: 8, fiber: 6 },
     lunch:     { time: '1:30 PM',  item: 'Subscription portioned meal',          qty: 'As delivered',                       kcal: 550, p: 35, c: 55, f: 18, fiber: 8 },
     dinner:    { time: '9:00 PM',  item: 'Chickpea salad + protein topping',     qty: 'Chickpea salad · 100g paneer or chicken on top', kcal: 420, p: 32, c: 40, f: 13, fiber: 9 } },
   Fri: { tag: 'Gym · Legs Day',
-    breakfast: { time: '9:00 AM',  item: '2 whole eggs + skyr + protein shake', qty: '2 eggs · 100g skyr · 1 scoop whey',  kcal: 350, p: 42, c: 10, f: 12, fiber: 1 },
-    lunch:     { time: '1:30 PM',  item: 'Subscription portioned meal',          qty: 'As delivered',                       kcal: 550, p: 35, c: 55, f: 18, fiber: 8 },
-    dinner:    { time: '9:00 PM',  item: 'Chicken breast salad + pasta',         qty: '120g chicken · veggies · 50g pasta (cooked)', kcal: 480, p: 44, c: 55, f: 10, fiber: 5 } },
+    preworkout: { time: '~6:15 AM', type: 'PRE-WORKOUT', item: '1 banana + black coffee', qty: 'Fast fuel before lifting — nothing heavy', kcal: 105, p: 1, c: 27, f: 0, fiber: 3, isPreWorkout: true },
+    breakfast:  { time: '~8:15 AM', type: 'BREAKFAST · POST-WORKOUT', note: 'This is your post-workout meal now — protein within ~1hr of lifting', item: '2 whole eggs + skyr + protein shake', qty: '2 eggs · 100g skyr · 1 scoop whey',  kcal: 350, p: 42, c: 10, f: 12, fiber: 1 },
+    lunch:      { time: '1:30 PM',  item: 'Subscription portioned meal',          qty: 'As delivered',                       kcal: 550, p: 35, c: 55, f: 18, fiber: 8 },
+    dinner:     { time: '9:00 PM',  item: 'Chicken breast salad + pasta',         qty: '120g chicken · veggies · 50g pasta (cooked)', kcal: 480, p: 44, c: 55, f: 10, fiber: 5 } },
   Sat: { tag: 'Rest · Skipping',
     breakfast: { time: '9:00 AM',  item: 'Overnight high-protein oats',          qty: '40g oats · 150g skyr · milk · 1 scoop whey', kcal: 415, p: 47, c: 41, f: 8, fiber: 6 },
     lunch:     { time: '1:30 PM',  item: 'Subscription portioned meal',          qty: 'As delivered',                       kcal: 550, p: 35, c: 55, f: 18, fiber: 8 },
@@ -1212,7 +1215,8 @@ export default function WorkoutTracker() {
                   color: '#aaa',
                   lineHeight: '1.6',
                 }}>
-                  <li>5 meals: 3 main + 2 snacks — snacks are NOT optional</li>
+                  <li>Gym days: banana pre-lift, big protein breakfast right after</li>
+                  <li>5 meals (6 on gym days): 3 main + 2 snacks — snacks are NOT optional</li>
                   <li>Snack 2 (5 PM) is the key one — prevents evening overeating</li>
                   <li>Every snack = protein + fiber, never naked carbs</li>
                   <li>Rest days (Tue/Thu/Sat): pick higher-protein snacks (shake, cottage cheese, skyr)</li>
@@ -1242,9 +1246,15 @@ export default function WorkoutTracker() {
                   subtext: 'Most important — kills evening hunger'
                 };
 
+                const preworkoutMeal = dayPlan.preworkout ? {
+                  ...dayPlan.preworkout,
+                  type: 'PRE-WORKOUT',
+                  isPreWorkout: true
+                } : null;
+
                 const breakfastMeal = {
                   ...dayPlan.breakfast,
-                  type: 'BREAKFAST'
+                  type: dayPlan.breakfast.type || 'BREAKFAST'
                 };
                 
                 const lunchMeal = {
@@ -1260,6 +1270,10 @@ export default function WorkoutTracker() {
 
                 return (
                   <div style={{ padding: '0 16px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                    {preworkoutMeal && (
+                      <MealCard meal={preworkoutMeal} isPreWorkout={true} />
+                    )}
+
                     <MealCard meal={breakfastMeal} />
 
                     <MealCard 
@@ -1299,12 +1313,13 @@ export default function WorkoutTracker() {
                 const snack2 = SNACK_MENU.find(s => s.id === snack2Id) || SNACK_MENU[0];
 
                 const mealsToSum = [
+                  dayPlan.preworkout,
                   dayPlan.breakfast,
                   snack1,
                   dayPlan.lunch,
                   snack2,
                   dayPlan.dinner
-                ];
+                ].filter(Boolean);
 
                 const totalKcal = mealsToSum.reduce((sum, m) => sum + (m?.kcal || 0), 0);
                 const totalP = mealsToSum.reduce((sum, m) => sum + (m?.p || 0), 0);
@@ -1383,6 +1398,18 @@ export default function WorkoutTracker() {
                       lineHeight: '1.4',
                     }}>
                       Target: ~1800 kcal · <span style={{ color: proteinColor, fontWeight: 'bold' }}>150g+ protein</span> · 30g fiber
+                    </div>
+
+                    <div style={{
+                      borderTop: '1px solid #1f1f1f',
+                      paddingTop: '10px',
+                      marginTop: '10px',
+                      fontSize: '11px',
+                      color: '#777',
+                      lineHeight: '1.4',
+                      fontStyle: 'italic',
+                    }}>
+                      Daily walk moved to post-dinner (~15 min) — aids digestion, protects morning sleep
                     </div>
                   </div>
                 );
@@ -2245,16 +2272,23 @@ function InputBox({ value, onChange, placeholder, readOnly, inputMode, done }) {
   );
 }
 
-function MealCard({ meal, isSnack, onSwap, isSwapOpen, toggleSwap, currentSnackId }) {
+function MealCard({ meal, isSnack, isPreWorkout, onSwap, isSwapOpen, toggleSwap, currentSnackId }) {
   const [showDirections, setShowDirections] = useState(false);
   const isOffPlan = meal.offPlan === true;
+  const isPre = isPreWorkout || meal.isPreWorkout;
+
+  const borderLeftStyle = isSnack 
+    ? '3px solid #fbbf24' 
+    : isPre 
+      ? '3px solid #64748b' 
+      : '1px solid #262626';
 
   return (
     <div style={{
       border: '1px solid #262626',
       background: '#0f0f0f',
       padding: '12px 14px',
-      borderLeft: isSnack ? '3px solid #fbbf24' : '1px solid #262626',
+      borderLeft: borderLeftStyle,
       position: 'relative',
     }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
@@ -2262,7 +2296,7 @@ function MealCard({ meal, isSnack, onSwap, isSwapOpen, toggleSwap, currentSnackI
           <span style={{ color: '#666', fontWeight: 600 }}>{meal.time}</span>
           <span style={{ color: '#444' }}>·</span>
           <span style={{ 
-            color: isOffPlan ? '#fbbf24' : '#fbbf24',
+            color: isPre ? '#94a3b8' : isOffPlan ? '#fbbf24' : '#fbbf24',
             fontWeight: 700,
           }}>
             {isOffPlan ? 'DINNER · OFF-PLAN' : meal.type}
@@ -2309,9 +2343,15 @@ function MealCard({ meal, isSnack, onSwap, isSwapOpen, toggleSwap, currentSnackI
       <div style={{ fontSize: '15px', fontWeight: 600, color: '#fafafa', lineHeight: 1.3, marginBottom: '6px' }}>
         {meal.item || meal.name}
       </div>
-      <div style={{ fontSize: '12px', color: '#888', marginBottom: (meal.subtext || meal.isLunch) ? '6px' : '10px', lineHeight: 1.4 }}>
+      <div style={{ fontSize: '12px', color: '#888', marginBottom: (meal.subtext || meal.isLunch || meal.note) ? '6px' : '10px', lineHeight: 1.4 }}>
         {meal.qty}
       </div>
+
+      {meal.note && (
+        <div style={{ fontSize: '11px', color: '#9ca3af', fontStyle: 'italic', marginBottom: '10px', lineHeight: 1.3 }}>
+          * {meal.note}
+        </div>
+      )}
       
       {meal.subtext && (
         <div style={{ fontSize: '11px', color: '#888', fontStyle: 'italic', marginBottom: '10px', lineHeight: 1.3 }}>

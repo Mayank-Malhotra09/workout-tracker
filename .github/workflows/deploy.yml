@@ -6,6 +6,10 @@ on:
       - main
       - master
 
+# Opt in to Node 24 for all JavaScript actions to suppress Node 20 deprecation warning
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
   contents: read
